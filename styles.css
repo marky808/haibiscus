@@ -1,0 +1,875 @@
+/* --- 基本リセットとフォント設定 --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Noto Serif JP', serif;
+}
+:root {
+  --primary: #BFA36F;      /* 高級感あるゴールド */
+  --secondary: #E6D1B3;    /* ライトゴールド */
+  --accent: #8C7B75;       /* 落ち着いたアクセント */
+  --dark: #222222;         /* ダークカラー */
+  --light: #F5F5F5;        /* 明るい背景 */
+}
+body {
+  line-height: 1.6;
+  color: var(--dark);
+  background-color: var(--light);
+}
+.transition {
+  transition: all 0.3s ease;
+}
+.animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================
+   ヒーローエリア（ヘッダー）
+   ========================= */
+header.header {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+              url('images/image.3.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 140px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header.header::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 3px double rgba(255,255,255,0.8);
+  border-radius: 15px;
+  pointer-events: none;
+}
+header h1 {
+  font-size: 3em;
+  margin-bottom: 25px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+header p {
+  font-size: 1.4em;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+/* ヒーローのCTAボタン */
+.cta {
+  background: var(--primary);
+  color: white;
+  padding: 18px 48px;
+  border-radius: 50px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 40px;
+  font-weight: 700;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.cta:hover {
+  background: var(--accent);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+.cta:active {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   コンセプトセクション
+   ========================= */
+.concept {
+  position: relative;
+  padding: 100px 20px;
+  text-align: center;
+}
+.concept::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('images/image.1.jpg') center/cover no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+.concept * {
+  position: relative;
+  z-index: 1;
+}
+.concept h2 {
+  font-size: 2.2em;
+  margin-bottom: 30px;
+  color: var(--dark);
+  font-weight: 700;
+}
+.concept h2::after {
+  content: "自分の体質を理解して、確実に変わる体を手に入れます";
+}
+.concept h2 span { display: none; }
+.concept p {
+  font-size: 1.1em;
+  line-height: 2;
+  color: var(--dark);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* =========================
+   カリキュラムセクション
+   ========================= */
+.curriculum {
+  padding: 100px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--light);
+}
+.curriculum h2 {
+  text-align: center;
+  font-size: 2.2em;
+  margin-bottom: 60px;
+  color: var(--dark);
+  font-weight: 700;
+}
+.curriculum h2::after {
+  content: "5月開講　あなたの理想を叶える充実カリキュラム";
+}
+.curriculum h2 span { display: none; }
+.with-bg {
+  position: relative;
+  overflow: hidden;
+}
+.with-bg::before {
+  content: "";
+  position: absolute; 
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('images/imge.2.jpg') center/cover no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+/* カリキュラム項目背景 */
+.curriculum-item.with-bg.bg-1::before {
+  background: url('images/image.2.jpg') center/cover no-repeat;
+}
+.curriculum-item.with-bg.bg-2::before {
+  background: url('images/image.3.jpg') center/cover no-repeat;
+}
+.curriculum-item.with-bg.bg-3::before {
+  background: url('images/hana.jpg') center/cover no-repeat;
+}
+.curriculum-item.with-bg.bg-4::before {
+  background: url('images/31539505_m.jpg') center/cover no-repeat;
+}
+.curriculum-item {
+  background: white;
+  padding: 40px;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-left: 4px solid var(--primary);
+  position: relative;
+  overflow: hidden;
+}
+.curriculum-item.transition:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  border-left-color: var(--accent);
+}
+.curriculum-item h3 {
+  color: var(--dark);
+  font-size: 1.4em;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  z-index: 1;
+}
+.curriculum-item .icon {
+  color: var(--primary);
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.curriculum-item .icon:hover {
+  transform: rotate(15deg);
+}
+.curriculum-item p {
+  color: var(--dark);
+  font-size: 1.1em;
+  line-height: 1.8;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   ベネフィットセクション
+   ========================= */
+.benefits {
+  padding: 100px 20px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(191,163,111,0.6),
+      rgba(140,123,117,0.6)
+    ),
+    url('images/image.4.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+}
+.benefits h2 {
+  font-size: 2.2em;
+  margin-bottom: 60px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.benefit-item.with-bg {
+  padding: 40px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.benefit-item.with-bg::before {
+  content: "";
+  position: absolute; 
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('images/default-benefit.jpg') center/cover no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+.benefit-item.with-bg.bg-benefit-1::before {
+  background: url('images/benefit1.jpg') center/cover no-repeat;
+}
+.benefit-item.with-bg.bg-benefit-2::before {
+  background: url('images/benefit2.jpg') center/cover no-repeat;
+}
+.benefit-item.with-bg.bg-benefit-3::before {
+  background: url('images/benefit3.jpg') center/cover no-repeat;
+}
+.benefit-item:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+}
+.benefit-item h3 {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 1.4em;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+.benefit-item p {
+  font-size: 1.1em;
+  line-height: 1.8;
+  position: relative;  z-index: 1;
+}
+
+/* =========================
+   トレーナー紹介セクション
+   ========================= */
+.trainer-section {
+  padding: 100px 20px;
+  background: var(--light);
+}
+
+.trainer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trainer-section h2 {
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 60px;
+  color: var(--dark);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.trainer-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  align-items: start;
+  background: white;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+  border-left: 5px solid var(--primary);
+}
+
+.trainer-image {
+  position: relative;
+}
+
+.trainer-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.trainer-image img:hover {
+  transform: scale(1.05);
+}
+
+.trainer-info h3 {
+  font-size: 2.2em;
+  color: var(--primary);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.trainer-title {
+  font-size: 1.2em;
+  color: var(--accent);
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.trainer-story {
+  margin-bottom: 40px;
+}
+
+.trainer-story p {
+  font-size: 1.1em;
+  line-height: 1.8;
+  color: var(--dark);
+  margin-bottom: 20px;
+}
+
+.trainer-message {
+  background: linear-gradient(135deg, var(--secondary), var(--light));
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary);
+  font-style: italic;
+}
+
+.trainer-credentials,
+.trainer-media {
+  margin-bottom: 30px;
+}
+
+.trainer-credentials h4,
+.trainer-media h4 {
+  font-size: 1.4em;
+  color: var(--primary);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.trainer-credentials ul {
+  list-style: none;
+  padding: 0;
+}
+
+.trainer-credentials li {
+  font-size: 1em;
+  color: var(--dark);
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.trainer-credentials li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.trainer-media p {
+  font-size: 1em;
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+  .trainer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+  
+  .trainer-section h2 {
+    font-size: 2em;
+  }
+  
+  .trainer-info h3 {
+    font-size: 1.8em;
+  }
+  
+  .trainer-story p {
+    font-size: 1em;
+  }
+}
+
+/* =========================
+   ビフォアアフターセクション
+   ========================= */
+.before-after {
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+.before-after h2 {
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #fff;
+}
+.before-after-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3列固定 */
+  gap: 20px;
+  justify-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.before-after-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+.before-after-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* =========================
+   料金表セクション
+   ========================= */
+.price-plan {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.price-plan h2 {
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.price-plan .discount-note {
+  font-size: 1em;
+  font-weight: bold;
+  color: red;
+  margin-bottom: 20px;
+}
+.price-plan table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.price-plan th,
+.price-plan td {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  vertical-align: top;
+}
+.price-plan th {
+  background: #f9f9f9;
+  font-weight: 700;
+  text-align: left;
+  width: 25%;
+}
+.price-plan td {
+  width: 75%;
+}
+
+/* =========================
+   無料相談セクション
+   ========================= */
+.consultation-section {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 60px 40px;
+  background: linear-gradient(135deg, var(--secondary), var(--light));
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  text-align: center;
+  border: 2px solid var(--primary);
+}
+
+.consultation-section h2 {
+  font-size: 2.2em;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: var(--dark);
+  letter-spacing: 1px;
+}
+
+.consultation-description {
+  font-size: 1.2em;
+  line-height: 1.8;
+  color: var(--dark);
+  margin-bottom: 40px;
+}
+
+.consultation-cta {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 20px 50px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.consultation-cta:hover {
+  background: var(--accent);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+}
+
+.consultation-cta:active {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.consultation-note {
+  margin-top: 20px;
+  font-size: 0.95em;
+  color: var(--accent);
+  font-style: italic;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .consultation-section {
+    margin: 50px 20px;
+    padding: 40px 20px;
+  }
+  
+  .consultation-section h2 {
+    font-size: 1.8em;
+  }
+  
+  .consultation-description {
+    font-size: 1.1em;
+  }
+  
+  .consultation-cta {
+    padding: 18px 40px;
+    font-size: 1.1em;
+  }
+}
+@media (max-width: 600px) {
+  .price-plan table,
+  .price-plan thead,
+  .price-plan tbody,
+  .price-plan th,
+  .price-plan td,
+  .price-plan tr {
+    display: block;
+    width: 100%;
+  }
+  .price-plan th {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  .price-plan td {
+    border: none;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .consultation-section {
+    margin: 50px 20px;
+    padding: 40px 20px;
+  }
+  
+  .consultation-section h2 {
+    font-size: 1.8em;
+  }
+  
+  .consultation-description {
+    font-size: 1.1em;
+  }
+  
+  .consultation-cta {
+    padding: 18px 40px;
+    font-size: 1.1em;
+  }
+}
+/* 通常価格（黒+取り消し線） */
+.normal-price {
+  color: #000;
+  text-decoration: line-through;
+}
+/* 特別価格（赤文字） */
+.special-price {
+  color: red;
+  font-weight: bold;
+}
+
+/* =========================
+   コンタクトフォーム
+   ========================= */
+.contact-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.contact-section h2 {  text-align: center;
+  margin-bottom: 20px;
+  color: var(--primary);
+  font-size: 2.5rem;
+}
+
+.contact-description {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.contact-form {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+  font-size: 1rem;
+}
+
+.required {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(219, 112, 147, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.checkbox-label a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.checkbox-label a:hover {
+  color: var(--secondary);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(219, 112, 147, 0.3);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* メッセージスタイル */
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* =========================
+   フッター
+   ========================= */
+footer {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+footer p {
+  margin: 10px 0;
+}
+
+/* スマホ表示でテキスト改行を自然にするためのメディアクエリ */
+@media (max-width: 600px) {
+  h1, h2, h3, p, li {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-break: loose;
+  }
+  body {
+    font-size: 0.95em;
+    line-height: 1.7;
+  }
+  /* スマホ表示時は改行を表示 */
+  .mobile-break {
+    display: inline;
+  }
+}
+@media (min-width: 601px) {
+  /* PC表示時は改行を非表示 */
+  .mobile-break {
+    display: none;
+  }
+}
+/* コンタクトフォーム */
+@media (max-width: 600px) {
+  .contact-section {
+    padding: 40px 0;
+  }
+  
+  .contact-section h2 {
+    font-size: 1.8rem;
+  }
+  
+  .contact-form {
+    padding: 20px 15px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+  
+  .checkbox-label {
+    font-size: 0.85rem;
+  }
+  
+  .submit-btn {
+    font-size: 1rem;
+    padding: 14px;
+  }
+}
