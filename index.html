@@ -322,8 +322,14 @@
             method: 'POST',
             body: formData
           })
-          .then(response => response.json())
+          .then(response => {
+            // レスポンスの詳細をコンソールに出力（デバッグ用）
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+            return response.json();
+          })
           .then(data => {
+            console.log('Response data:', data); // デバッグ用
             if (data.status === 'success') {
               alert(data.message);
               // フォームをリセット
@@ -333,8 +339,8 @@
             }
           })
           .catch(error => {
-            console.error('Error:', error);
-            alert('送信中にエラーが発生しました。お手数ですが、直接お電話（044-888-8688）でお問い合わせください。');
+            console.error('Fetch error:', error); // デバッグ用
+            alert('送信中にエラーが発生しました。お手数ですが、直接お電話（044-888-8688）でお問い合わせください。\n\nデバッグ情報: ' + error.message);
           })
           .finally(() => {
             // ボタンを元に戻す

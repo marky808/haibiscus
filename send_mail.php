@@ -8,6 +8,10 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
+// 日本語文字化け対策
+mb_language("Japanese");
+mb_internal_encoding("UTF-8");
+
 // POSTリクエストのみ受け付ける
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -42,8 +46,8 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 // 送信先メールアドレス
 $to = 'madoka.hibiscus1107@gmail.com';
 
-// 件名
-$subject = 'ULU美ボディアカデミー 無料相談お申込み';
+// 件名（日本語エンコード）
+$subject = mb_encode_mimeheader('ULU美ボディアカデミー 無料相談お申込み', 'UTF-8');
 
 // メール本文を作成
 $body = "ULU美ボディアカデミーの無料相談にお申込みがありました。\n\n";
@@ -59,33 +63,32 @@ $body .= "---\n";
 $body .= "送信日時: " . date('Y年m月d日 H:i:s') . "\n";
 $body .= "送信元IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
 
-// メールヘッダー
-$headers = array(
-    'From' => $email,
-    'Reply-To' => $email,
-    'Return-Path' => $email,
-    'X-Mailer' => 'PHP/' . phpversion(),
-    'Content-Type' => 'text/plain; charset=UTF-8'
-);
+// メールヘッダー（ロリポップサーバー用に最適化）
+$headers = "From: " . $email . "\r\n";
+$headers .= "Reply-To: " . $email . "\r\n";
+$headers .= "Return-Path: madoka.hibiscus1107@gmail.com\r\n";
+$headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$headers .= "Content-Transfer-Encoding: 8bit\r\n";
 
-// ヘッダーを文字列に変換
-$header_string = '';
-foreach ($headers as $key => $value) {
-    $header_string .= $key . ': ' . $value . "\r\n";
-}
+// メール送信（ロリポップサーバー用）
+$mail_sent = mail($to, $subject, $body, $headers);
 
-// メール送信
-$mail_sent = mb_send_mail($to, $subject, $body, $header_string);
+// デバッグ情報をログに記録
+$debug_info = "Mail sent: " . ($mail_sent ? "SUCCESS" : "FAILED") . "\n";
+$debug_info .= "To: " . $to . "\n";
+$debug_info .= "Subject: " . $subject . "\n";
+$debug_info .= "Headers: " . $headers . "\n";
+$debug_info .= "Time: " . date('Y-m-d H:i:s') . "\n\n";
+file_put_contents('mail_debug.log', $debug_info, FILE_APPEND | LOCK_EX);
 
 if ($mail_sent) {
     // 成功時の処理
     echo json_encode([
         'status' => 'success', 
         'message' => 'お問い合わせありがとうございます。24時間以内にご返信いたします。'
-    ]);
-    
-    // 自動返信メールを送信（オプション）
-    $auto_reply_subject = 'ULU美ボディアカデミー - お問い合わせありがとうございます';
+    ]);    // 自動返信メールを送信（オプション）
+    $auto_reply_subject = mb_encode_mimeheader('ULU美ボディアカデミー - お問い合わせありがとうございます', 'UTF-8');
     $auto_reply_body = $name . " 様\n\n";
     $auto_reply_body .= "この度は、ULU美ボディアカデミーにお問い合わせいただき、誠にありがとうございます。\n\n";
     $auto_reply_body .= "お送りいただいたお問い合わせ内容を確認いたしました。\n";
@@ -100,18 +103,12 @@ if ($mail_sent) {
     $auto_reply_body .= "TEL：044-888-8688\n";
     $auto_reply_body .= "━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
     
-    $auto_reply_headers = array(
-        'From' => 'madoka.hibiscus1107@gmail.com',
-        'Reply-To' => 'madoka.hibiscus1107@gmail.com',
-        'Content-Type' => 'text/plain; charset=UTF-8'
-    );
+    $auto_reply_headers = "From: madoka.hibiscus1107@gmail.com\r\n";
+    $auto_reply_headers .= "Reply-To: madoka.hibiscus1107@gmail.com\r\n";
+    $auto_reply_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    $auto_reply_headers .= "Content-Transfer-Encoding: 8bit\r\n";
     
-    $auto_reply_header_string = '';
-    foreach ($auto_reply_headers as $key => $value) {
-        $auto_reply_header_string .= $key . ': ' . $value . "\r\n";
-    }
-    
-    mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_reply_header_string);
+    mail($email, $auto_reply_subject, $auto_reply_body, $auto_reply_headers);
     
 } else {
     // 失敗時の処理
