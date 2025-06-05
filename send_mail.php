@@ -49,6 +49,10 @@ $to = 'madoka.hibiscus1107@gmail.com';
 // 件名（日本語エンコード）
 $subject = mb_encode_mimeheader('ULU美ボディアカデミー 無料相談お申込み', 'UTF-8');
 
+// ドメイン名を取得（ロリポップサーバーのドメインを使用）
+$domain = $_SERVER['HTTP_HOST'] ?? 'velvet-jp.main.jp';
+$from_email = 'noreply@' . $domain;
+
 // メール本文を作成
 $body = "ULU美ボディアカデミーの無料相談にお申込みがありました。\n\n";
 $body .= "【お名前】\n" . $name . "\n\n";
@@ -63,13 +67,14 @@ $body .= "---\n";
 $body .= "送信日時: " . date('Y年m月d日 H:i:s') . "\n";
 $body .= "送信元IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
 
-// メールヘッダー（ロリポップサーバー用に最適化）
-$headers = "From: " . $email . "\r\n";
+// メールヘッダー（Gmail認証問題対策）
+$headers = "From: ULU美ボディアカデミー <" . $from_email . ">\r\n";
 $headers .= "Reply-To: " . $email . "\r\n";
-$headers .= "Return-Path: madoka.hibiscus1107@gmail.com\r\n";
+$headers .= "Return-Path: " . $from_email . "\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 $headers .= "Content-Transfer-Encoding: 8bit\r\n";
+$headers .= "X-Sender-IP: " . $_SERVER['REMOTE_ADDR'] . "\r\n";
 
 // メール送信（ロリポップサーバー用）
 $mail_sent = mail($to, $subject, $body, $headers);
@@ -103,12 +108,13 @@ if ($mail_sent) {
     $auto_reply_body .= "TEL：044-888-8688\n";
     $auto_reply_body .= "━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
     
-    $auto_reply_headers = "From: madoka.hibiscus1107@gmail.com\r\n";
-    $auto_reply_headers .= "Reply-To: madoka.hibiscus1107@gmail.com\r\n";
+    $auto_reply_headers = "From: ULU美ボディアカデミー <" . $from_email . ">\r\n";
+    $auto_reply_headers .= "Reply-To: " . $from_email . "\r\n";
     $auto_reply_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
     $auto_reply_headers .= "Content-Transfer-Encoding: 8bit\r\n";
     
-    mail($email, $auto_reply_subject, $auto_reply_body, $auto_reply_headers);
+    // 自動返信は一時的に無効化（Gmail認証問題のため）
+    // mail($email, $auto_reply_subject, $auto_reply_body, $auto_reply_headers);
     
 } else {
     // 失敗時の処理

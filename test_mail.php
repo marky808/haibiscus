@@ -15,12 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $test_body .= "送信日時: " . date('Y年m月d日 H:i:s') . "\n";
     $test_body .= "送信元IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
     
-    $test_headers = "From: test@" . $_SERVER['HTTP_HOST'] . "\r\n";
-    $test_headers .= "Reply-To: test@" . $_SERVER['HTTP_HOST'] . "\r\n";
-    $test_headers .= "Return-Path: madoka.hibiscus1107@gmail.com\r\n";
+    // ドメイン名を取得（ロリポップサーバーのドメインを使用）
+    $domain = $_SERVER['HTTP_HOST'] ?? 'velvet-jp.main.jp';
+    $from_email = 'test@' . $domain;
+    
+    $test_headers = "From: ULU美ボディアカデミー テスト <" . $from_email . ">\r\n";
+    $test_headers .= "Reply-To: " . $from_email . "\r\n";
+    $test_headers .= "Return-Path: " . $from_email . "\r\n";
     $test_headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
     $test_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
     $test_headers .= "Content-Transfer-Encoding: 8bit\r\n";
+    $test_headers .= "X-Sender-IP: " . $_SERVER['REMOTE_ADDR'] . "\r\n";
     
     $result = mail($test_to, $test_subject, $test_body, $test_headers);
     
