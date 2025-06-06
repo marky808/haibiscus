@@ -67,8 +67,11 @@ $body .= "---\n";
 $body .= "送信日時: " . date('Y年m月d日 H:i:s') . "\n";
 $body .= "送信元IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
 
+// 差出人名を適切にエンコード（文字化け対策）
+$from_name = mb_encode_mimeheader('ULU美ボディアカデミー', 'UTF-8');
+
 // メールヘッダー（Gmail認証問題対策）
-$headers = "From: ULU美ボディアカデミー <" . $from_email . ">\r\n";
+$headers = "From: " . $from_name . " <" . $from_email . ">\r\n";
 $headers .= "Reply-To: " . $email . "\r\n";
 $headers .= "Return-Path: " . $from_email . "\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
