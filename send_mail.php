@@ -44,7 +44,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // 送信先メールアドレス
-$to = 'madoka.hibiscus1107@gmail.com';
+$to = 'info@hibiscus.velvet.jp';
 
 // 件名（日本語エンコード）
 $subject = mb_encode_mimeheader('ULU美ボディアカデミー 無料相談お申込み', 'UTF-8');
