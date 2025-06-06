@@ -49,8 +49,8 @@ $to = 'info@hibiscus.velvet.jp';
 // 件名（日本語エンコード）
 $subject = mb_encode_mimeheader('ULU美ボディアカデミー 無料相談お申込み', 'UTF-8');
 
-// ドメイン名を取得（ロリポップサーバーのドメインを使用）
-$domain = $_SERVER['HTTP_HOST'] ?? 'velvet-jp.main.jp';
+// ドメイン名を明示的に指定（ロリポップサーバーの正確なドメイン）
+$domain = 'hibiscus.velvet.jp';
 $from_email = 'noreply@' . $domain;
 
 // メール本文を作成
@@ -79,12 +79,19 @@ $headers .= "X-Sender-IP: " . $_SERVER['REMOTE_ADDR'] . "\r\n";
 // メール送信（ロリポップサーバー用）
 $mail_sent = mail($to, $subject, $body, $headers);
 
-// デバッグ情報をログに記録
-$debug_info = "Mail sent: " . ($mail_sent ? "SUCCESS" : "FAILED") . "\n";
+// 詳細なデバッグ情報をログに記録
+$debug_info = "=== MAIL DEBUG INFO ===\n";
+$debug_info .= "Date: " . date('Y-m-d H:i:s') . "\n";
+$debug_info .= "Mail sent: " . ($mail_sent ? "SUCCESS" : "FAILED") . "\n";
 $debug_info .= "To: " . $to . "\n";
+$debug_info .= "From: " . $from_email . "\n";
+$debug_info .= "Domain: " . $domain . "\n";
 $debug_info .= "Subject: " . $subject . "\n";
+$debug_info .= "Body Length: " . strlen($body) . " characters\n";
 $debug_info .= "Headers: " . $headers . "\n";
-$debug_info .= "Time: " . date('Y-m-d H:i:s') . "\n\n";
+$debug_info .= "PHP Version: " . phpversion() . "\n";
+$debug_info .= "Server: " . $_SERVER['SERVER_NAME'] . "\n";
+$debug_info .= "========================\n\n";
 file_put_contents('mail_debug.log', $debug_info, FILE_APPEND | LOCK_EX);
 
 if ($mail_sent) {
